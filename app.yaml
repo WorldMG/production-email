@@ -2,9 +2,15 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+inbound_services:
+- mail_bounce
+
 handlers:
-- url: .*
+- url: /sendout
   script: main.app
+- url: /_ah/bounce
+  script: handle_bounced_email.app
+  login: admin
 
 libraries:
 - name: jinja2
