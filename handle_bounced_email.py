@@ -27,7 +27,7 @@ class LogBounceHandler(BounceNotificationHandler):
 # [END bounce_handler]
 
 
-app = webapp2.WSGIApplication([LogBounceHandler.mapping()], debug=True)
+app = webapp2.WSGIApplication(['/_ah/bounce',LogBounceHandler.mapping()], debug=True)
 
 #########################
 # [START bounce_handler]
