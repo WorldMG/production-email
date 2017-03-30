@@ -79,22 +79,22 @@ import webapp2
 ######################################
 
 ######################################
-class LogBounceHandler(BounceNotificationHandler):
-    def receive(self, bounce_message):
-        mail.send_mail(to='yding@corp.lawyer.com', sender='yding@corp.lawyer.com', subject='Bounced email',
-                       body=str(self.request))
-        logging.info('Received bounce post ... [%s]', self.request)
-        logging.info('Bounce original: %s', bounce_message.original)
-        logging.info('Bounce notification: %s', bounce_message.notification)
-
-class BounceHandler(webapp2.RequestHandler):
-    def post(self):
-        bounce = BounceNotification(self.request.POST)
-        logging.info('Bounce original: %s', bounce.original)
-        logging.info('Bounce notification: %s', bounce.notification)
-
-app = webapp2.WSGIApplication([
-    ('/_ah/bounce', LogBounceHandler),
-], debug=True)
+#class LogBounceHandler(BounceNotificationHandler):
+#    def receive(self, bounce_message):
+#        mail.send_mail(to='yding@corp.lawyer.com', sender='yding@corp.lawyer.com', subject='Bounced email',
+#                       body=str(self.request))
+#        logging.info('Received bounce post ... [%s]', self.request)
+#        logging.info('Bounce original: %s', bounce_message.original)
+#        logging.info('Bounce notification: %s', bounce_message.notification)
+#
+#class BounceHandler(webapp2.RequestHandler):
+#    def post(self):
+#        bounce = BounceNotification(self.request.POST)
+#        logging.info('Bounce original: %s', bounce.original)
+#        logging.info('Bounce notification: %s', bounce.notification)
+#
+#app = webapp2.WSGIApplication([
+#    ('/_ah/bounce', LogBounceHandler),
+#], debug=True)
 
 
