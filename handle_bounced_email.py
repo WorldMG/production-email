@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#import logging
-#from google.appengine.api import app_identity
-#from google.appengine.api import mail
-#from google.appengine.ext.webapp.mail_handlers import BounceNotification
-#from google.appengine.ext.webapp.mail_handlers import BounceNotificationHandler
-#import webapp2
+import logging
+from google.appengine.api import app_identity
+from google.appengine.api import mail
+from google.appengine.ext.webapp.mail_handlers import BounceNotification
+from google.appengine.ext.webapp.mail_handlers import BounceNotificationHandler
+import webapp2
 
 #logging.info("==============================")
 # [START bounce_handler]
@@ -79,22 +79,22 @@
 ######################################
 
 ######################################
-#class LogBounceHandler(BounceNotificationHandler):
-#    def receive(self, bounce_message):
-#        mail.send_mail(to='yding@corp.lawyer.com', sender='yding@corp.lawyer.com', subject='Bounced email',
-#                       body=str(self.request))
-#        logging.info('Received bounce post ... [%s]', self.request)
-#        logging.info('Bounce original: %s', bounce_message.original)
-#        logging.info('Bounce notification: %s', bounce_message.notification)
-#
-#class BounceHandler(webapp2.RequestHandler):
-#    def post(self):
-#        bounce = BounceNotification(self.request.POST)
-#        logging.info('Bounce original: %s', bounce.original)
-#        logging.info('Bounce notification: %s', bounce.notification)
-#
-#app = webapp2.WSGIApplication([
-#    ('/_ah/bounce', LogBounceHandler),
-#], debug=True)
+class LogBounceHandler(BounceNotificationHandler):
+    def receive(self, bounce_message):
+        mail.send_mail(to='yding@corp.lawyer.com', sender='yding@corp.lawyer.com', subject='Bounced email',
+                       body=str(self.request))
+        logging.info('Received bounce post ... [%s]', self.request)
+        logging.info('Bounce original: %s', bounce_message.original)
+        logging.info('Bounce notification: %s', bounce_message.notification)
+
+class BounceHandler(webapp2.RequestHandler):
+    def post(self):
+        bounce = BounceNotification(self.request.POST)
+        logging.info('Bounce original: %s', bounce.original)
+        logging.info('Bounce notification: %s', bounce.notification)
+
+app = webapp2.WSGIApplication([
+    ('/_ah/bounce', LogBounceHandler),
+], debug=True)
 
 
