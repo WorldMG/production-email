@@ -17,7 +17,7 @@ from google.appengine.api import mail
 from google.appengine.ext.webapp.mail_handlers import BounceNotificationHandler
 import webapp2
 
-
+logging.info("==============================")
 # [START bounce_handler]
 class LogBounceHandler(BounceNotificationHandler):
     def receive(self, bounce_message):
