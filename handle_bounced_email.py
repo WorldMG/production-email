@@ -46,6 +46,6 @@ class MailBounceHandler(BounceNotificationHandler,mail):
 		               body=bouncelog)
         #return bouncelog
 # [END bounce_handler]
-bapp = webapp2.WSGIApplication([MailBounceHandler.mapping()], debug=True)
+bapp = webapp2.WSGIApplication([(r'/_ah/bounce',LogBounceHandler)], debug=True)
 
 
