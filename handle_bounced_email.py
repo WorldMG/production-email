@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import logging
+from google.appengine.api import app_identity
 from google.appengine.api import mail
 from google.appengine.ext.webapp.mail_handlers import BounceNotificationHandler
 import webapp2
@@ -31,21 +32,48 @@ import webapp2
 
 #########################
 # [START bounce_handler]
-class MailBounceHandler(BounceNotificationHandler,mail):
-    def receive(self, bounce_message,mail):
-    	logging.info('Received bounce post ... [%s]', self.request)
+#class MailBounceHandler(BounceNotificationHandler,mail):
+#    def receive(self, bounce_message,mail):
+#    	logging.info('Received bounce post ... [%s]', self.request)
+#        logging.info('Bounce original: %s', bounce_message.original)
+#        logging.info('Bounce notification: %s', bounce_message.notification)
+#        log1 = 'Received bounce post ... [%s]', self.request
+#        log2 = 'Bounce original: %s', bounce_message.original
+#        log3 = 'Bounce notification: %s', bounce_message.notification
+#        bouncelog = log1+log2+log3
+#        mail.send_mail(sender="Lawyer.com Referrals <yding@corp.lawyer.com>",
+#		               to="Lawyer.com Support <yding@corp.lawyer.com>",
+#		               subject="GAE Referral Email Bounce Notification",
+#		               body=bouncelog)
+        #return bouncelog
+# [END bounce_handler]
+#bapp = webapp2.WSGIApplication([MailBounceHandler.mapping()], debug=True)
+
+def send_approved_mail(mailcontent):
+    # [START send_mail]
+    mail.send_mail(sender="Lawyer.com Referrals <yding@corp.lawyer.com>",
+                   to="Lawyer.com Support <yding@corp.lawyer.com>",
+                   subject="GAE Referral Email Bounce Notification",
+                   body=mailcontent)
+    # [END send_mail]
+
+class MailBounceHandler(BounceNotificationHandler,webapp2.RequestHandler):
+    def receive(self, bounce_message):
+        logging.info('Received bounce post ... [%s]', self.request)
         logging.info('Bounce original: %s', bounce_message.original)
         logging.info('Bounce notification: %s', bounce_message.notification)
         log1 = 'Received bounce post ... [%s]', self.request
         log2 = 'Bounce original: %s', bounce_message.original
         log3 = 'Bounce notification: %s', bounce_message.notification
         bouncelog = log1+log2+log3
-        mail.send_mail(sender="Lawyer.com Referrals <yding@corp.lawyer.com>",
-		               to="Lawyer.com Support <yding@corp.lawyer.com>",
-		               subject="GAE Referral Email Bounce Notification",
-		               body=bouncelog)
-        #return bouncelog
-# [END bounce_handler]
-bapp = webapp2.WSGIApplication([MailBounceHandler.mapping()], debug=True)
+
+        send_approved_mail(bouncelog)
+        self.response.content_type = 'text/plain'
+        self.response.write('Sent an email to Albert.')
+
+
+app = webapp2.WSGIApplication([
+    ('/_ah/bounce', MailBounceHandler),
+], debug=True)
 
 
