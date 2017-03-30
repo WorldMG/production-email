@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
-from google.appengine.api import app_identity
-from google.appengine.api import mail
-from google.appengine.ext.webapp.mail_handlers import BounceNotification
-from google.appengine.ext.webapp.mail_handlers import BounceNotificationHandler
-import webapp2
+#import logging
+#from google.appengine.api import app_identity
+#from google.appengine.api import mail
+#from google.appengine.ext.webapp.mail_handlers import BounceNotification
+#from google.appengine.ext.webapp.mail_handlers import BounceNotificationHandler
+#import webapp2
 
 #logging.info("==============================")
 # [START bounce_handler]
